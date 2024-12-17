@@ -4,81 +4,96 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f0f4f8;
+        }
+        .card {
+            border: none;
+            border-radius: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
+        }
+        .form-control:focus {
+            box-shadow: none;
+            border-color: #007bff;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+        .text-primary {
+            color: #007bff !important;
+        }
+        .form-label {
+            font-weight: 500;
+            color: #333;
+        }
+    </style>
 </head>
-<body class="bg-lime-100 min-h-screen flex items-center justify-center">
-    <div class="absolute top-5 left-5">
-        <a href="{{ url('/') }}" class="text-green-600 font-semibold hover:underline">Dashboard</a>
-    </div>
-
-    <div class="w-full max-w-lg mx-auto bg-white rounded-lg shadow-lg border border-green-300">
-        <div class="bg-green-500 text-white text-center py-4 rounded-t-lg">
-            <h4 class="text-lg font-bold">{{ __('Register') }}</h4>
+<body class="d-flex align-items-center justify-content-center min-vh-100">
+    <div class="card w-100" style="max-width: 400px;">
+        <div class="card-header text-center">
+            <h4 class="mb-0">{{ __('Register') }}</h4>
         </div>
-        <div class="p-6">
+        <div class="card-body p-4">
             <form method="POST" action="{{ route('register') }}">
                 @csrf
 
                 <!-- Name Field -->
-                <div class="mb-4">
-                    <label for="name" class="block text-green-700 font-medium mb-1">{{ __('Name') }}</label>
-                    <input id="name" type="text" 
-                        class="w-full border border-green-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500" 
-                        name="name" 
-                        value="{{ old('name') }}" 
-                        required 
-                        autocomplete="name" 
-                        autofocus>
+                <div class="mb-3">
+                    <label for="name" class="form-label">{{ __('Name') }}</label>
+                    <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
                     @error('name')
-                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                        <div class="text-danger small mt-1">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <!-- Email Field -->
-                <div class="mb-4">
-                    <label for="email" class="block text-green-700 font-medium mb-1">{{ __('Email Address') }}</label>
-                    <input id="email" type="email" 
-                        class="w-full border border-green-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500" 
-                        name="email" 
-                        value="{{ old('email') }}" 
-                        required 
-                        autocomplete="email">
+                <div class="mb-3">
+                    <label for="email" class="form-label">{{ __('Email Address') }}</label>
+                    <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autocomplete="email">
                     @error('email')
-                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                        <div class="text-danger small mt-1">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <!-- Password Field -->
-                <div class="mb-4">
-                    <label for="password" class="block text-green-700 font-medium mb-1">{{ __('Password') }}</label>
-                    <input id="password" type="password" 
-                        class="w-full border border-green-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500" 
-                        name="password" 
-                        required 
-                        autocomplete="new-password">
+                <div class="mb-3">
+                    <label for="password" class="form-label">{{ __('Password') }}</label>
+                    <input id="password" type="password" class="form-control" name="password" required autocomplete="new-password">
                     @error('password')
-                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                        <div class="text-danger small mt-1">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <!-- Confirm Password Field -->
-                <div class="mb-4">
-                    <label for="password-confirm" class="block text-green-700 font-medium mb-1">{{ __('Confirm Password') }}</label>
-                    <input id="password-confirm" type="password" 
-                        class="w-full border border-green-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500" 
-                        name="password_confirmation" 
-                        required 
-                        autocomplete="new-password">
+                <div class="mb-3">
+                    <label for="password-confirm" class="form-label">{{ __('Confirm Password') }}</label>
+                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                 </div>
 
                 <!-- Submit Button -->
-                <div class="mt-4">
-                    <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-2 rounded-lg transition duration-200">
+                <div class="d-grid gap-2 mt-4">
+                    <button type="submit" class="btn btn-primary">
                         {{ __('Register') }}
                     </button>
                 </div>
             </form>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
