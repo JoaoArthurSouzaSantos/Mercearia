@@ -3,64 +3,69 @@
 namespace App\Http\Controllers;
 
 use App\Models\Estoque;
-use App\Http\Requests\StoreEstoqueRequest;
-use App\Http\Requests\UpdateEstoqueRequest;
+use App\Models\Produto;
+use Illuminate\Http\Request;
 
 class EstoqueController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        // Listar movimentações de estoque
+        $estoques = Estoque::with('produto')->get();
+        return view('estoques.index', compact('estoques'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        // Formulário para registrar movimentação
+        $produtos = Produto::all(); // Produtos disponíveis
+        return view('estoques.create', compact('produtos'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreEstoqueRequest $request)
+    public function store(Request $request)
     {
-        //
+        // Validar e salvar movimentação
+        $validated = $request->validate([
+            'produto_id' => 'required|exists:produtos,id',
+            'quantidade' => 'required|integer',
+            'tipo_movimento' => 'required|in:entrada,saida',
+            'descricao' => 'nullable|string|max:255',
+            'data_movimento' => 'required|date',
+        ]);
+
+        Estoque::create($validated);
+
+        return redirect()->route('estoques.index')->with('success', 'Movimentação de estoque registrada com sucesso!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Estoque $estoque)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Estoque $estoque)
     {
-        //
+        // Formulário para editar movimentação
+        $produtos = Produto::all();
+        return view('estoques.edit', compact('estoque', 'produtos'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateEstoqueRequest $request, Estoque $estoque)
+    public function update(Request $request, Estoque $estoque)
     {
-        //
+        // Validar e atualizar movimentação
+        $validated = $request->validate([
+            'produto_id' => 'required|exists:produtos,id',
+            'quantidade' => 'required|integer',
+            'tipo_movimento' => 'required|in:entrada,saida',
+            'descricao' => 'nullable|string|max:255',
+            'data_movimento' => 'required|date',
+        ]);
+
+        $estoque->update($validated);
+
+        return redirect()->route('estoques.index')->with('success', 'Movimentação de estoque atualizada com sucesso!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Estoque $estoque)
     {
-        //
+        // Excluir movimentação
+        $estoque->delete();
+
+        return redirect()->route('estoques.index')->with('success', 'Movimentação de estoque excluída com sucesso!');
     }
 }

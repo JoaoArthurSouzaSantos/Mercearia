@@ -2,13 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Models\Estoque;
 use Illuminate\Database\Seeder;
+use App\Models\Estoque;
 
 class EstoqueSeeder extends Seeder
 {
     public function run()
     {
-        Estoque::factory(50)->create();
+        Estoque::factory()->count(50)->create();
     }
 }

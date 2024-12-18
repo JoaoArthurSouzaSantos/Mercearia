@@ -9,13 +9,14 @@ class Estoque extends Model
 {
     use HasFactory;
 
-    // Define a chave estrangeira
     protected $fillable = [
-        'produto_id',
-        'quantidade',
+        'produto_id',   // ID do produto relacionado
+        'quantidade',   // Quantidade adicionada ou removida
+        'tipo_movimento', // Entrada ou saída
+        'descricao',    // Detalhes da movimentação
+        'data_movimento', // Data da movimentação
     ];
 
-    // Relacionamento com o modelo Produto
     public function produto()
     {
         return $this->belongsTo(Produto::class);
