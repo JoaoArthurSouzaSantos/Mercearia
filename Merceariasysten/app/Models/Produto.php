@@ -13,5 +13,8 @@ class Produto extends Model
         'nome',
         'descricao',
         'preco',
+        'estoque',
+        'codigo_barras',
+        'categoria_id', // Relacionado à tabela de categorias, se existir.
     ];
 }

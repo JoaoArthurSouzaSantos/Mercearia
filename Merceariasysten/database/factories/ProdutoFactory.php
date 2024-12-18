@@ -2,19 +2,19 @@
 
 namespace Database\Factories;
 
-use App\Models\Produto;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ProdutoFactory extends Factory
 {
-    protected $model = Produto::class;
-
     public function definition()
     {
         return [
-            'nome' => $this->faker->word(),
-            'descricao' => $this->faker->sentence(),
-            'preco' => $this->faker->randomFloat(2, 1, 1000),
+            'nome' => $this->faker->word,
+            'descricao' => $this->faker->sentence,
+            'preco' => $this->faker->randomFloat(2, 1, 100),
+            'estoque' => $this->faker->numberBetween(0, 100),
+            'codigo_barras' => $this->faker->unique()->ean13,
+            'categoria_id' => null, // Se você usar categorias, atribua IDs válidos aqui
         ];
     }
 }
